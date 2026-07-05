@@ -121,6 +121,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   yes.addEventListener("click", () => {
-    alert("💗 Anh biết mà… mãi yêu Chị 💗");
+    alert("💗 Em biết mà… mãi yêu Chị 💗");
   });
 });
