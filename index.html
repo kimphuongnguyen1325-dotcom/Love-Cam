@@ -373,11 +373,7 @@ setTimeout(type,700);
 
 }
 
-</script>
-
-</body>
-</html>
-<script>
+</<script>
 
 //=======================
 // Nội dung hiện từng dòng
@@ -635,135 +631,7 @@ h.remove();
 
 });
 
-</script>
-<div class="signature">
-💗 Mãi yêu Chị - Bé Cam 💗
-</div>
-<div id="question" style="display:none;margin-top:45px;">
+</script>>
 
-<h2 style="color:#ffd6ec;font-weight:300;margin-bottom:25px;">
-🥺 Chị có yêu Em không?
-</h2>
-
-<button id="yesBtn">
-❤️ Có
-</button>
-
-<button id="noBtn"
-style="margin-left:15px;background:#666;">
-💔 Không
-</button>
-
-</div>
-
-<div id="result"
-style="
-display:none;
-margin-top:35px;
-font-size:28px;
-color:#ffd6ec;
-line-height:1.8;
-text-shadow:0 0 15px #ff77bb;
-">
-
-💖
-
-<br><br>
-
-Cảm ơn Chị...
-
-<br>
-
-Đã cho Em cơ hội được yêu thương Chị.
-
-<br><br>
-
-Em hứa sẽ luôn trân trọng Chị. ❤️
-
-</div>
-//=========================
-// Nút "Không" chạy trốn
-//=========================
-
-const no=document.getElementById("noBtn");
-
-no.addEventListener("mouseenter",moveNo);
-no.addEventListener("touchstart",moveNo);
-
-function moveNo(){
-
-no.style.position="fixed";
-
-no.style.left=Math.random()*80+"vw";
-
-no.style.top=Math.random()*80+"vh";
-
-}
-
-//=========================
-// Nút Có
-//=========================
-
-document.getElementById("yesBtn").onclick=function(){
-
-document.getElementById("question").style.display="none";
-
-document.getElementById("result").style.display="block";
-
-fireworks();
-
-}
-
-//=========================
-// Pháo tim
-//=========================
-
-function fireworks(){
-
-for(let i=0;i<180;i++){
-
-let h=document.createElement("div");
-
-h.innerHTML="💖";
-
-h.style.position="fixed";
-
-h.style.left="50vw";
-
-h.style.top="50vh";
-
-h.style.fontSize=(18+Math.random()*16)+"px";
-
-document.body.appendChild(h);
-
-let angle=Math.random()*360;
-
-let speed=3+Math.random()*5;
-
-let x=0;
-
-let y=0;
-
-let timer=setInterval(()=>{
-
-x+=Math.cos(angle*Math.PI/180)*speed;
-
-y+=Math.sin(angle*Math.PI/180)*speed;
-
-h.style.transform=`translate(${x}px,${y}px)`;
-
-h.style.opacity-=0.015;
-
-if(h.style.opacity<=0){
-
-clearInterval(timer);
-
-h.remove();
-
-}
-
-},16);
-
-}
-
-}
+</body>
+</html>
