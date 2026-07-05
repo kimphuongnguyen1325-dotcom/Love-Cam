@@ -1,51 +1,253 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Bé Cam 💌</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Bé Cam 💌</title>
+
+<style>
+body {
+  margin: 0;
+  overflow: hidden;
+  background: radial-gradient(circle at top, #111, #000);
+  color: white;
+  font-family: Arial;
+  text-shadow: 0 0 10px rgba(255,255,255,0.4);
+}
+
+/* 🌌 nền */
+.stars, .hearts, .flowers, .sparkles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+/* 💌 intro */
+#intro {
+  position: absolute;
+  top: 40%;
+  width: 100%;
+  text-align: center;
+}
+
+/* 💓 tim đập */
+#heartbeat {
+  font-size: 60px;
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: beat 1s infinite;
+  filter: drop-shadow(0 0 10px pink);
+}
+
+@keyframes beat {
+  0%,100% { transform: translateX(-50%) scale(1); }
+  50% { transform: translateX(-50%) scale(1.3); }
+}
+
+/* ⌨️ typing */
+#typing {
+  position: absolute;
+  top: 30%;
+  width: 100%;
+  text-align: center;
+  font-size: 20px;
+}
+
+/* 💗 signature */
+#signature {
+  position: absolute;
+  bottom: 10%;
+  width: 100%;
+  text-align: center;
+  font-size: 24px;
+  display: none;
+}
+
+/* 🥺 choice */
+#choice {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  text-align: center;
+  display: none;
+}
+
+button {
+  padding: 10px 20px;
+  margin: 10px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+</style>
 </head>
+
 <body>
 
-<!-- 🌌 Background -->
 <div class="stars"></div>
 <div class="hearts"></div>
 <div class="flowers"></div>
 <div class="sparkles"></div>
 
-<!-- 💌 Màn hình mở đầu -->
 <div id="intro">
   <h1>💌 Bé Cam có điều muốn nói với Chị…</h1>
   <button onclick="start()">❤️ Chạm vào đây</button>
 </div>
 
-<!-- 💓 Tim đập -->
 <div id="heartbeat">💓</div>
 
-<!-- ⌨️ Text gõ từng dòng -->
 <div id="typing">
   <p id="line1"></p>
   <p id="line2"></p>
   <p id="line3"></p>
 </div>
 
-<!-- 💗 Kết -->
 <div id="signature">Mãi yêu Chị - Bé Cam 💗</div>
 
-<!-- 🥺 lựa chọn -->
 <div id="choice">
   <h2>Chị có yêu Em không?</h2>
   <button id="yes">Có ❤️</button>
   <button id="no">Không</button>
 </div>
 
-<!-- 🎵 nhạc -->
 <audio id="music" loop>
   <source src="music.mp3" type="audio/mpeg">
 </audio>
 
-<script src="script.js"></script>
+<script>
+function start() {
+  document.getElementById("intro").style.display = "none";
+  document.getElementById("music").play();
+
+  typeText();
+  startHearts();
+  startFlowers();
+  startStars();
+  startSparkles();
+}
+
+/* ⌨️ typing */
+function typeText() {
+  const lines = [
+    "Em nhớ Chị nhiều lắm…",
+    "Từng ngày trôi qua đều là Chị…",
+    "Và Em chỉ muốn nói rằng…"
+  ];
+
+  let el = 0;
+  let i = 0;
+
+  function typing() {
+    if (el < lines.length) {
+      let target = document.getElementById("line" + (el + 1));
+      target.innerHTML += lines[el][i];
+      i++;
+
+      if (i < lines[el].length) {
+        setTimeout(typing, 70);
+      } else {
+        i = 0;
+        el++;
+        setTimeout(typing, 500);
+      }
+    } else {
+      document.getElementById("signature").style.display = "block";
+      document.getElementById("choice").style.display = "block";
+    }
+  }
+  typing();
+}
+
+/* 💗 tim bay */
+function startHearts() {
+  setInterval(() => {
+    let h = document.createElement("div");
+    h.innerHTML = "💗";
+    h.style.position = "absolute";
+    h.style.left = Math.random() * 100 + "%";
+    h.style.bottom = "0px";
+    document.body.appendChild(h);
+
+    let up = setInterval(() => {
+      h.style.bottom = (parseInt(h.style.bottom) || 0) + 5 + "px";
+      if (parseInt(h.style.bottom) > window.innerHeight) {
+        h.remove();
+        clearInterval(up);
+      }
+    }, 30);
+  }, 400);
+}
+
+/* 🌸 hoa rơi */
+function startFlowers() {
+  setInterval(() => {
+    let f = document.createElement("div");
+    f.innerHTML = "🌸";
+    f.style.position = "absolute";
+    f.style.left = Math.random() * 100 + "%";
+    f.style.top = "-20px";
+    document.body.appendChild(f);
+
+    let down = setInterval(() => {
+      f.style.top = (parseInt(f.style.top) || 0) + 3 + "px";
+      if (parseInt(f.style.top) > window.innerHeight) {
+        f.remove();
+        clearInterval(down);
+      }
+    }, 30);
+  }, 600);
+}
+
+/* 🌌 sao */
+function startStars() {
+  for (let i = 0; i < 150; i++) {
+    let s = document.createElement("div");
+    s.innerHTML = "✨";
+    s.style.position = "absolute";
+    s.style.left = Math.random() * 100 + "%";
+    s.style.top = Math.random() * 100 + "%";
+    s.style.opacity = Math.random();
+    document.body.appendChild(s);
+  }
+}
+
+/* 💖 click spark */
+function startSparkles() {
+  document.addEventListener("click", (e) => {
+    let sp = document.createElement("div");
+    sp.innerHTML = "💖";
+    sp.style.position = "absolute";
+    sp.style.left = e.clientX + "px";
+    sp.style.top = e.clientY + "px";
+    document.body.appendChild(sp);
+
+    setTimeout(() => sp.remove(), 800);
+  });
+}
+
+/* 🥺 nút chạy trốn */
+document.addEventListener("DOMContentLoaded", () => {
+  const no = document.getElementById("no");
+  const yes = document.getElementById("yes");
+
+  no.addEventListener("mouseover", () => {
+    no.style.position = "absolute";
+    no.style.left = Math.random() * 80 + "%";
+    no.style.top = Math.random() * 80 + "%";
+  });
+
+  yes.addEventListener("click", () => {
+    alert("💗 Em biết mà… mãi yêu Chị 💗");
+  });
+});
+</script>
+
 </body>
 </html>
-
