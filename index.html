@@ -9,17 +9,16 @@
 body {
   margin: 0;
   overflow: hidden;
-  background: #000; /* 🌌 nền đen */
+  background: #000;
   font-family: Arial;
   color: #ffb6ff;
 }
 
-/* ⭐ sao lấp lánh */
+/* ⭐ sao */
 .stars {
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 100%;
-  overflow: hidden;
 }
 
 .star {
@@ -32,17 +31,14 @@ body {
 
 @keyframes twinkle {
   0%,100% { opacity: 0.2; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.8); }
+  50% { opacity: 1; transform: scale(1.6); }
 }
 
-/* 💖 chữ hồng phát sáng */
+/* 💖 glow */
 .glow-text {
   color: #ff69b4;
-  font-weight: 300; /* nét mảnh */
-  text-shadow:
-    0 0 5px #ff69b4,
-    0 0 10px #ff69b4,
-    0 0 20px #ff1493;
+  font-weight: 300;
+  text-shadow: 0 0 5px #ff69b4, 0 0 15px #ff1493;
 }
 
 /* 💌 intro */
@@ -53,7 +49,7 @@ body {
   text-align: center;
 }
 
-/* 💓 tim đập */
+/* 💓 heartbeat */
 #heartbeat {
   font-size: 60px;
   position: absolute;
@@ -61,7 +57,6 @@ body {
   left: 50%;
   transform: translateX(-50%);
   animation: beat 1s infinite;
-  filter: drop-shadow(0 0 10px #ff69b4);
 }
 
 @keyframes beat {
@@ -84,7 +79,6 @@ body {
   bottom: 10%;
   width: 100%;
   text-align: center;
-  font-size: 24px;
   display: none;
 }
 
@@ -105,7 +99,6 @@ button {
   cursor: pointer;
   background: #ff69b4;
   color: white;
-  font-weight: 300;
   box-shadow: 0 0 10px #ff69b4;
   transition: 0.2s;
 }
@@ -149,13 +142,15 @@ button:hover {
 </audio>
 
 <script>
-/* ⭐ tạo sao lấp lánh */
+
+/* ⭐ sao */
 function createStars() {
   const stars = document.getElementById("stars");
 
   for (let i = 0; i < 120; i++) {
     let s = document.createElement("div");
     s.className = "star";
+
     let size = Math.random() * 3 + 1;
 
     s.style.width = size + "px";
@@ -170,13 +165,16 @@ function createStars() {
 
 function start() {
   document.getElementById("intro").style.display = "none";
-  document.getElementById("music").play();
 
-  typeText();
+  const music = document.getElementById("music");
+  music.volume = 0.6;
+  music.play().catch(() => {});
+
   createStars();
+  typeText();
 }
 
-/* ⌨️ typing */
+/* ⌨️ typing (FIX không bị đè chữ) */
 function typeText() {
   const lines = [
     "Em nhớ Chị nhiều lắm…",
@@ -189,27 +187,33 @@ function typeText() {
 
   function typing() {
     if (el < lines.length) {
+
       let target = document.getElementById("line" + (el + 1));
-      target.innerHTML += lines[el][i];
+
+      target.innerHTML = lines[el].substring(0, i);
+
       i++;
 
-      if (i < lines[el].length) {
+      if (i <= lines[el].length) {
         setTimeout(typing, 70);
       } else {
         i = 0;
         el++;
         setTimeout(typing, 500);
       }
+
     } else {
       document.getElementById("signature").style.display = "block";
       document.getElementById("choice").style.display = "block";
     }
   }
+
   typing();
 }
 
-/* 🥺 nút chạy trốn */
+/* 🥺 nút chạy */
 document.addEventListener("DOMContentLoaded", () => {
+
   const no = document.getElementById("no");
   const yes = document.getElementById("yes");
 
@@ -220,11 +224,12 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   yes.addEventListener("click", () => {
-    alert("💗 Em biết mà… mãi yêu Chị 🍊 💗");
+    alert("💗 Em biết mà… mãi yêu Chị 💗");
   });
+
 });
+
 </script>
 
 </body>
 </html>
-
