@@ -1,150 +1,126 @@
-const lines = [
-"Chị à...",
-"Có những điều Em giữ trong lòng rất lâu...",
-"Em thích được nhìn Chị cười 😊",
-"Thích được quan tâm Chị mỗi ngày ❤️",
-"Và hôm nay...",
-"Em muốn hỏi Chị một điều..."
-];
+function start() {
+  document.getElementById("intro").style.display = "none";
+  document.getElementById("music").play();
 
-const typing = document.getElementById("typing");
-const yesBtn = document.getElementById("yesBtn");
-const noBtn = document.getElementById("noBtn");
-const finalMessage = document.getElementById("finalMessage");
-
-let line = 0;
-let char = 0;
-
-function typeWriter(){
-
-if(line>=lines.length) return;
-
-if(char<lines[line].length){
-
-typing.innerHTML+=lines[line].charAt(char);
-
-char++;
-
-setTimeout(typeWriter,70);
-
-}else{
-
-typing.innerHTML+="<br><br>";
-
-line++;
-
-char=0;
-
-setTimeout(typeWriter,500);
-
+  typeText();
+  startHearts();
+  startFlowers();
+  startStars();
+  startSparkles();
 }
 
+/* ⌨️ hiệu ứng gõ chữ */
+function typeText() {
+  const lines = [
+    "Em nhớ Chị nhiều lắm…",
+    "Từng ngày trôi qua đều là Chị…",
+    "Và em chỉ muốn nói rằng…"
+  ];
+
+  let i = 0;
+  let el = 0;
+
+  function typing() {
+    if (el < lines.length) {
+      document.getElementById("line" + (el + 1)).innerText += lines[el][i];
+      i++;
+
+      if (i < lines[el].length) {
+        setTimeout(typing, 80);
+      } else {
+        i = 0;
+        el++;
+        setTimeout(typing, 500);
+      }
+    } else {
+      document.getElementById("signature").style.display = "block";
+      document.getElementById("choice").style.display = "block";
+    }
+  }
+
+  typing();
 }
 
-typeWriter();
+/* 💗 tim bay */
+function startHearts() {
+  setInterval(() => {
+    let h = document.createElement("div");
+    h.innerHTML = "💗";
+    h.style.position = "absolute";
+    h.style.left = Math.random() * 100 + "%";
+    h.style.bottom = "0px";
+    h.style.fontSize = "20px";
+    document.body.appendChild(h);
 
-function createStar(){
-
-const star=document.createElement("div");
-
-star.className="star";
-
-star.style.left=Math.random()*100+"vw";
-
-star.style.top="-10px";
-
-star.style.animationDuration=
-4+Math.random()*6+"s";
-
-star.style.opacity=Math.random();
-
-document.getElementById("stars").appendChild(star);
-
-setTimeout(()=>{
-star.remove();
-},10000);
-
+    let up = setInterval(() => {
+      h.style.bottom = parseInt(h.style.bottom || 0) + 5 + "px";
+      if (parseInt(h.style.bottom) > window.innerHeight) {
+        h.remove();
+        clearInterval(up);
+      }
+    }, 30);
+  }, 400);
 }
 
-setInterval(createStar,120);
+/* 🌸 hoa rơi */
+function startFlowers() {
+  setInterval(() => {
+    let f = document.createElement("div");
+    f.innerHTML = "🌸";
+    f.style.position = "absolute";
+    f.style.left = Math.random() * 100 + "%";
+    f.style.top = "-20px";
+    document.body.appendChild(f);
 
-function createPetal(){
-
-const petal=document.createElement("div");
-
-petal.className="petal";
-
-petal.innerHTML=Math.random()>0.5?"🌸":"💖";
-
-petal.style.left=Math.random()*100+"vw";
-
-petal.style.animationDuration=
-5+Math.random()*5+"s";
-
-petal.style.fontSize=
-16+Math.random()*18+"px";
-
-document.getElementById("petals").appendChild(petal);
-
-setTimeout(()=>{
-petal.remove();
-},10000);
-
+    let down = setInterval(() => {
+      f.style.top = parseInt(f.style.top) + 3 + "px";
+      if (parseInt(f.style.top) > window.innerHeight) {
+        f.remove();
+        clearInterval(down);
+      }
+    }, 30);
+  }, 600);
 }
 
-setInterval(createPetal,350);
-
-noBtn.addEventListener("mouseover",moveButton);
-noBtn.addEventListener("click",moveButton);
-
-function moveButton(){
-
-const x=Math.random()*250-120;
-
-const y=Math.random()*180-90;
-
-noBtn.style.transform=
-`translate(${x}px,${y}px)`;
-
+/* 🌌 sao */
+function startStars() {
+  for (let i = 0; i < 150; i++) {
+    let s = document.createElement("div");
+    s.innerHTML = "✨";
+    s.style.position = "absolute";
+    s.style.left = Math.random() * 100 + "%";
+    s.style.top = Math.random() * 100 + "%";
+    s.style.opacity = Math.random();
+    document.body.appendChild(s);
+  }
 }
 
-yesBtn.addEventListener("click",()=>{
+/* ✨ sparkles click */
+function startSparkles() {
+  document.addEventListener("click", (e) => {
+    let sp = document.createElement("div");
+    sp.innerHTML = "💖";
+    sp.style.position = "absolute";
+    sp.style.left = e.clientX + "px";
+    sp.style.top = e.clientY + "px";
+    document.body.appendChild(sp);
 
-document.querySelector(".container").style.display="none";
-
-finalMessage.classList.remove("hidden");
-
-for(let i=0;i<120;i++){
-
-setTimeout(createLove,i*60);
-
+    setTimeout(() => sp.remove(), 800);
+  });
 }
 
+/* 🙈 nút không chạy trốn */
+document.addEventListener("DOMContentLoaded", () => {
+  const no = document.getElementById("no");
+  const yes = document.getElementById("yes");
+
+  no.addEventListener("mouseover", () => {
+    no.style.position = "absolute";
+    no.style.left = Math.random() * 80 + "%";
+    no.style.top = Math.random() * 80 + "%";
+  });
+
+  yes.addEventListener("click", () => {
+    alert("💗 Anh biết mà… mãi yêu Chị 💗");
+  });
 });
-
-function createLove(){
-
-const heart=document.createElement("div");
-
-heart.className="heartFloat";
-
-heart.innerHTML="💗";
-
-heart.style.left=Math.random()*100+"vw";
-
-heart.style.top="100vh";
-
-heart.style.fontSize=
-20+Math.random()*35+"px";
-
-heart.style.animationDuration=
-3+Math.random()*2+"s";
-
-document.body.appendChild(heart);
-
-setTimeout(()=>{
-heart.remove();
-},6000);
-
-}
-
